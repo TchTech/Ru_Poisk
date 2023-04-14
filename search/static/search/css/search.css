@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Lucida Grande, Arial, sans-serif;
+  }
+  #pagemarks{
+    height: 20px;
+    width: 100%;
+    background: #e2e2e2;
+  }
+  .pagemark{
+    height: 20px;
+    width: 100px;
+    background: #adadad;
+    text-overflow: clip;
+  }
+  .menubutton,
+  input {
+    outline: none;
+  }
+  #add{
+    font-size: larger;
+  }
+  #controls {
+    padding: 3px;
+    border-bottom: solid 1px #ccc;
+    background: #6600FF;
+    background: linear-gradient(to top, #6600FF, #310062 );
+  }
+  #rusearch-icon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 10px;
+    margin-top: 50px;
+    width:70px;
+    border: solid 2px #6600FF;
+    border-radius: 10px;
+  }
+  #controls button,
+  #controls input {
+    font-size: 14px;
+    line-height: 24px;
+    border-radius: 2px;
+    padding: 0 6px;
+  }
+  
+  /* These glyphs are on the small side, make them look more natural when
+  compared to the back/forward buttons */
+  #controls #terminate {
+    font-size: 24px;
+  }
+  
+  #results{
+    width: 100%;
+    text-overflow: clip;
+  }
+  .form-label{
+    font-size: smaller;
+  }
+  #controls #find {
+    font-size: 18px;
+    background-color: #6600FF;
+  }
+  
+  #location {
+    border: solid 2px #fff;
+    padding: 4px;
+    width: 90%;
+    -webkit-box-sizing: border-box;
+  }
+  
+  #query {
+    border: solid 2px #fff;
+    padding: 4px;
+    width: 90%;
+    -webkit-box-sizing: border-box;
+  }
+  
+  #controls {
+    display: -webkit-flex;
+    -webit-flex-direction: column;
+  }
+  
+  #controls #location-form {
+    -webkit-flex: 1;
+    display: -webkit-flex;
+    -webit-flex-direction: column;
+  }
+  
+  #controls #center-column {
+    -webkit-flex: 1;
+  }
+  .center {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+  }
+  .wave {
+    width: 5px;
+    height: 100px;
+    background: linear-gradient(45deg, rgb(183, 0, 255), #fff);
+    margin: 10px;
+    animation: wave 1s linear infinite;
+    border-radius: 20px;
+  }
+  .wave:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  .wave:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  .wave:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+  .wave:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+  .wave:nth-child(6) {
+    animation-delay: 0.5s;
+  }
+  .wave:nth-child(7) {
+    animation-delay: 0.6s;
+  }
+  .wave:nth-child(8) {
+    animation-delay: 0.7s;
+  }
+  .wave:nth-child(9) {
+    animation-delay: 0.8s;
+  }
+  .wave:nth-child(10) {
+    animation-delay: 0.9s;
+  }
+  
+  @keyframes wave {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }

@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ру.Поиск</title>
+    <link rel="shortcut icon" href="{% static 'search/imgs/icon-browser.ico'%}" type="image/png">
+    <link rel="stylesheet" href="{% static 'search/css/search.css'%}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
+  ></script>
+  <!-- Font Awesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css"
+    rel="stylesheet"
+  />
+  </head>
+    <body>
+    <div id="controls" style="height:30px">
+
+    </div>
+
+    <div id="results">
+      
+    </div>
+<div class="bg-image hover-overlay ripple " style="display: block;margin-left: auto;margin-right: auto;width: 30%;border-radius: 40px; margin-top:50px; margin-bottom:50px">
+  <img src="{% static 'search/imgs/ru_poisk.png' %}" class="img-fluid"/>
+  <a href="/">
+    <div class="mask" style="background-color: rgba(57, 192, 237, 0.2);"></div>
+  </a>
+</div>
+<form id="location-form form-range" class="input-group" method="get" action="/results/">
+  {% csrf_token %}
+  <div class="input-group center" style="position: relative;
+  top: 50%;
+  transform: translateY(-50%);">
+  <button type="button" class="btn btn-outline-info mb-3" data-bs-toggle="modal" id="advanced_options_btn" style="margin-right:10px" data-bs-target="#advanced_options_modal">
+    <i class="fas fa-wrench"></i>
+  </button>
+    <div class="md-form active-cyan-2 mb-3" style="margin-right:10px;width:300px">
+      <input class="form-control" name="link" required type="url" id="site_input" value="" placeholder="Сайт" aria-label="Сайт">
+    </div>
+    <div class="md-form active-cyan-2 mb-3" style="margin-right:10px;width:300px">
+      <input class="form-control" name="query" required type="text" id="query_input" value="" placeholder="Запрос" aria-label="Запрос">
+    </div>
+  <button class="btn btn-primary mb-3" type="submit" id="form-submit" style="background-color:#4a00ab">
+    <i class="fas fa-search"></i>
+  </button>
+  </div>
+  </div>
+</form>
+<div class="modal fade" id="advanced_options_modal" tabindex="-1" aria-labelledby="advanced_options_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="advanced_options_modal_label">Расширенные опции поиска</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <h3 style="color:#4a00ab">Глубина поиска:</h3>
+        <p>(макс. кол-во страниц)</p>
+        <div class="md-form active-cyan-2 mb-3" style="margin-right:10px;width:300px">
+          <input class="form-control" id="depth" name="depth" type="number" placeholder="Глубина" aria-label="Глубина">
+        </div>
+        <h3 style="color:#4a00ab">Sitemap-метод:</h3>
+        <p>(метод получения страниц)</p>
+        <div class="md-form active-cyan-2 mb-3" style="margin-right:10px;width:300px">
+          <select class="form-select" id="sitemap-method" aria-label="Default select example">
+            <option selected value="1">Проход всех страниц сайта</option>
+            <option value="2">Поиск готового sitemap-файла на сервере</option>
+          </select>
+        </div>
+        <h3 style="color:#4a00ab">Rank-метод:</h3>
+        <p>(метод ранжирования страниц)</p>
+        <div class="md-form active-cyan-2 mb-3" style="margin-right:10px;width:300px">
+          <select class="form-select" id="rank-method" aria-label="Default select example">
+            <option selected value="1">Семантический</option>
+            <option value="2">Точный</option>
+            <option value="3">BM-25</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button type="button" style="background-color:#4a00ab" id="advanced_options_submit_btn" class="btn btn-primary">Сохранить изменения</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% if query != fixed %}
+<div style="margin-top:50px;display:block;margin-left: auto;margin-right: auto;">
+  <h3 class="center" style="color:darkred">Может вы имели ввиду: "{{fixed}}"</h3>
+  </div>
+{% endif %}
+{% if results %}
+<div style="margin-top:50px;display:block;margin-left: auto;margin-right: auto;">
+<h2 class="center">По запросу "{{query}}" найдено:</h2>
+</div>
+<div class="center" style="display: block;margin-left: auto;margin-right: auto;margin-top:50px;display:block;margin-left: auto;margin-right: auto;justify-content:center; width:1000px">
+{% for r in results %}
+<div class="card center" style="margin: 10px; width:500px;display: block;margin-left: auto;margin-right: auto; height:200px;margin-bottom: 25px">
+  <div class="card-body">
+    <h5 class="card-title">{{r.title}}</h5>
+    <a class="card-text" style="margin-top:20px;margin-bottom:20px;" target="_blank" href="{{r.link}}">{{r.link}}</a>
+    <button type="button" onclick="window.open('{{r.link}}', '_blank')" style="background-color:#4a00ab; margin-bottom:5px" class="btn btn-primary center">Перейти по ссылке</button>
+    <div class="card-footer text-muted"><p style="color: grey;">{{r.rank}}</p></div>
+  </div> <!--MAKE OPTIONS MODAL-->
+</div>
+{% endfor %}
+</div>
+{% endif %}
+
+<script src="{% static 'search/js/browser.js'%}"></script>
+</body>
+</html>
